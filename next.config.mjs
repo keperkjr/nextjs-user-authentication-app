@@ -1,4 +1,8 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+import config from "./config.mjs";
+
+const nextConfig = {
+    env: Object.assign({}, config)
+};
 
 export default nextConfig;

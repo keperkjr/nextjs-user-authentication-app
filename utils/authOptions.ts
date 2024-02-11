@@ -21,10 +21,7 @@ export const authOptions: AuthOptions = {
                 password: { label: "Password", type: "password" }
             },            
 			async authorize(credentials, request) {
-                const user = getUser(credentials?.email  || '' );
-                console.log('credentials', credentials)
-                console.log('user', user);
-                
+                const user = getUser(credentials?.email  || '' );                
 				if (!user) {
 					throw new Error("Invalid email")
 				}

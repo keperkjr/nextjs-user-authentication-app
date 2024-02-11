@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getUser, createUserAsync } from '@/repository/userRepository'
+import { getUser } from '@/repository/userRepository'
+import { createUserAsync } from '@/services/user/helper';
 
 
 export async function POST(request: NextRequest) {

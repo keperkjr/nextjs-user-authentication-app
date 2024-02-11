@@ -1,6 +1,6 @@
 import { AuthOptions, User as SessionUser } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { authenticateUserAsync } from '@/repository/userRepository'
+import { authenticateUserAsync } from "@/services/user/helper";
 
 export const authOptions: AuthOptions = {
 	session: {
@@ -19,7 +19,7 @@ export const authOptions: AuthOptions = {
                 password: { label: "Password", type: "password" }
             },            
 			async authorize(credentials, request) : Promise<SessionUser> {
-                const dbUser = await authenticateUserAsync(credentials?.email  || '', credentials?.password || '' );            
+                const dbUser = await authenticateUserAsync(credentials?.email || '', credentials?.password || '');            
                 const sessionUser = {...dbUser, id: ''} as SessionUser;
                 return sessionUser;
 			}

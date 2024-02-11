@@ -1,25 +1,24 @@
 import { IUser } from '@/repository/models/user';
+import * as fileHelper from '@/utils/file';
+import path from 'path';
 
 export interface IDatabase {
     users: Array<IUser>
 };
 
 class Database implements IDatabase {
-    users: Array<IUser>;
-    constructor() {
-        this.users = new Array<IUser>();
-    }
+    users: Array<IUser> = new Array<IUser>();
 }
 
-var _db: IDatabase;
 export function getDatabase() : IDatabase {
-    if (!_db) {
-        _db = new Database();
-        saveDatabase(_db);
-    }
-    return _db;
+    const result = fileHelper.readJson<IDatabase>(getDatabasePath()) ?? new Database();
+    return result;
 }
 
 export function saveDatabase(database: IDatabase) {
-    _db = {...database};
+    fileHelper.write(getDatabasePath(), JSON.stringify(database));
+}
+
+function getDatabasePath() {
+    return path.resolve('./', 'database.json');
 }

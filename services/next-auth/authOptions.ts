@@ -1,8 +1,6 @@
-import NextAuth, { AuthOptions } from "next-auth";
-
+import { AuthOptions, User as SessionUser } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import byCrypt from 'bcrypt';
-import { getUser } from '@/repository/userRepository'
+import { authenticateUserAsync } from '@/repository/userRepository'
 
 export const authOptions: AuthOptions = {
 	session: {
@@ -20,18 +18,10 @@ export const authOptions: AuthOptions = {
                 email: { label: "Username", type: "text", placeholder: "jsmith" },
                 password: { label: "Password", type: "password" }
             },            
-			async authorize(credentials, request) {
-                const user = getUser(credentials?.email  || '' );                
-				if (!user) {
-					throw new Error("Invalid email")
-				}
-
-				const isPasswordValid = await byCrypt.compare(credentials?.password || '' , user.password);
-				if (!isPasswordValid ) {
-					throw new Error("Invalid password")
-				}
-
-                return user;
+			async authorize(credentials, request) : Promise<SessionUser> {
+                const dbUser = await authenticateUserAsync(credentials?.email  || '', credentials?.password || '' );            
+                const sessionUser = {...dbUser, id: ''} as SessionUser;
+                return sessionUser;
 			}
 		})
 	],

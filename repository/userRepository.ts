@@ -18,3 +18,17 @@ export function saveUser(user: IUser) {
     const database = getDatabase();
     database.users.push(user);
 }
+
+export async function authenticateUserAsync(email: string, password: string) : Promise<IUser> {
+    const user = getUser(email  || '' );  
+    console.log('user', user)              
+    if (!user) {
+        throw new Error("Invalid email")
+    }
+
+    const isPasswordValid = await bcrypt.compare(password || '' , user.password);
+    if (!isPasswordValid ) {
+        throw new Error("Invalid password")
+    }
+    return user;
+}

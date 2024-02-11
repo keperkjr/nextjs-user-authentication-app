@@ -14,7 +14,7 @@ function TopNav() {
     return (
         <nav className="nav shadow p-2 justify-content-between mb-3">
             <Link href="/" className="nav-link">
-                🛒 NextJs - User Authentication
+                👥 NextJs - User Authentication
             </Link>
             
             <div className="d-flex">

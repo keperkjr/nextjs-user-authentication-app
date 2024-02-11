@@ -1,6 +1,5 @@
-import NextAuth from "next-auth/next";
-import { authOptions } from "@/services/next-auth/authOptions";
+import { authorize } from "@/services/next-auth/authorize";
 
-const handler = NextAuth(authOptions);
+const handler = authorize;
 
 export { handler as GET, handler as POST };

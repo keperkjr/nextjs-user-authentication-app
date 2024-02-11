@@ -11,10 +11,15 @@ class Database implements IDatabase {
     }
 }
 
-var db: IDatabase;
+var _db: IDatabase;
 export function getDatabase() : IDatabase {
-    if (!db) {
-        db = new Database();
+    if (!_db) {
+        _db = new Database();
+        saveDatabase(_db);
     }
-    return db;
+    return _db;
+}
+
+export function saveDatabase(database: IDatabase) {
+    _db = {...database};
 }

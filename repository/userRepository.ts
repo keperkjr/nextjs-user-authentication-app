@@ -1,4 +1,4 @@
-import { getDatabase } from '@/repository/database';
+import { getDatabase, saveDatabase } from '@/repository/database';
 import { IUser, User } from '@/repository/models/user';
 import bcrypt from 'bcrypt'
 
@@ -17,6 +17,7 @@ export function getUser(email: string) : IUser | undefined {
 export function saveUser(user: IUser) {
     const database = getDatabase();
     database.users.push(user);
+    saveDatabase(database);
 }
 
 export async function authenticateUserAsync(email: string, password: string) : Promise<IUser> {

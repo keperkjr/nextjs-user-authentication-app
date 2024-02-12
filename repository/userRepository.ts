@@ -16,7 +16,7 @@ export function saveUser(user: IUser) {
     const database = getDatabase();
     let existing = findUser(database, user.email);
     if (existing) {
-        existing = {...user};
+        existing = Object.assign(existing, user);
     } else {
         database.users.push(user);
     }
